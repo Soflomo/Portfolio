@@ -3,7 +3,7 @@
       xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                     http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Soflomo\Portfolio\Entity\ItemBase" repository-class="Soflomo\Portfolio\Repository\Item">
+    <mapped-superclass name="Soflomo\Portfolio\Entity\AbstractItem" repository-class="Soflomo\Portfolio\Repository\Item">
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO" />
         </id>

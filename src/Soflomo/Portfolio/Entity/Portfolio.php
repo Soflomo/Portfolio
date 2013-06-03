@@ -40,6 +40,6 @@
 
 namespace Soflomo\Portfolio\Entity;
 
-class Portfolio extends PortfolioBase
+class Portfolio extends AbstractPortfolio
 {
 }

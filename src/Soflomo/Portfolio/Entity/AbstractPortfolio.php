@@ -40,7 +40,7 @@
 
 namespace Soflomo\Portfolio\Entity;
 
-class PortfolioBase implements PortfolioInterface
+abstract class AbstractPortfolio implements PortfolioInterface
 {
     protected $id;
     protected $slug;

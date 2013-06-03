@@ -40,7 +40,7 @@
 
 namespace Soflomo\Portfolio\Entity;
 
-class ItemBase implements ItemInterface
+abstract class AbstractItem implements ItemInterface
 {
     /**
      * @var int

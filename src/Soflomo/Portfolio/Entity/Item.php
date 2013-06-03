@@ -40,6 +40,6 @@
 
 namespace Soflomo\Portfolio\Entity;
 
-class Item extends ItemBase
+class Item extends AbstractItem
 {
 }
