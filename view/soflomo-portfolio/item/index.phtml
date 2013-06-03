@@ -1,0 +1,20 @@
+<?php
+/**
+ * Listing of all items
+ *
+ * @var $items Array or items
+ */
+?>
+<h1>Portfolio</h1>
+
+<?php foreach ($items as $item):?>
+    <article>
+        <h2><a href="<?php echo $this->url('/view', array(
+            'item' => $item->getId(),
+            'slug' => $this->slug($item->getTitle()),
+        ))?>">
+            <?php echo $this->escapeHtml($item->getTitle())?>
+        </a></h2>
+        <p><?php echo $item->getLead()?></p>
+    </article>
+<?php endforeach ?>

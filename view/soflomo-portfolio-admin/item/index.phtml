@@ -1,0 +1,31 @@
+<?php
+/**
+ * Listing of portfolio articles in admin
+ *
+ * @var $portfolio        Current portfolio
+ * @var $paginator   Articles from this portfolio
+ * @var $unpublished Unpublished articles from this portfolio
+ */
+?>
+
+<h1>Portfolio listing</h1>
+
+<a href="<?php echo $this->url('zfcadmin/portfolio/item/create', array(),array(),true)?>">
+    New item
+</a>
+
+<?php if (count($this->paginator)): ?>
+<ul>
+<?php foreach ($this->paginator as $item): ?>
+    <li><a href="<?php echo $this->url('zfcadmin/portfolio/item/view', array(
+        'item' => $item->getId(),
+    ), array(), true)?>">
+        <?php echo $this->escapeHtml($item->getTitle())?>
+    </a></li>
+<?php endforeach; ?>
+</ul>
+<?php endif; ?>
+
+<?php echo $this->paginationControl($this->paginator,
+                                    'Sliding',
+                                    'soflomo-portfolio-admin/pagination/control', array('route' => 'zfcadmin/portfolio', 'slug' => $portfolio->getSlug())); ?>

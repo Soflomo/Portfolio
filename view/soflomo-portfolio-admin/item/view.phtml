@@ -1,0 +1,19 @@
+<?php
+/**
+ * (Pre)view page of portfolio item in admin
+ *
+ * @var $portfolio  Current portfolio
+ * @var $item       Article from this portfolio
+ */
+?>
+
+<ul>
+    <li><a href="<?php echo $this->url('zfcadmin/portfolio', array('portfolio' => $portfolio->getSlug()))?>">Back to listing</a></li>
+    <li><a href="<?php echo $this->url('zfcadmin/portfolio/item/update', array(),array(),true)?>">Edit this item</a></li>
+</ul>
+
+<article>
+    <h1><?php echo $this->escapeHtml($item->getTitle())?></h1>
+    <p><?php echo $this->escapeHtml($item->getLead())?></p>
+    <p><?php echo $this->escapeHtml($item->getBody())?></p>
+</article>

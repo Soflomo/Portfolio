@@ -1,0 +1,15 @@
+<?php
+/**
+ * Detail of portfolio item
+ *
+ * @var $item Item to be shown
+ */
+
+$this->headTitle($this->escapeHtmlAttr($item->getTitle()));
+?>
+
+<article>
+    <h1><?php echo $this->escapeHtml($item->getTitle())?></h1>
+    <p><?php echo $item->getLead()?></p>
+    <p><?php echo $item->getBody()?></p>
+</article>

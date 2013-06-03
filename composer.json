@@ -1,0 +1,35 @@
+{
+    "name": "soflomo/portfolio",
+    "description": "Portfolio module for Ensemble",
+    "license": "BSD-3-Clause",
+    "type": "library",
+    "keywords": [
+        "zf2",
+        "portfolio"
+    ],
+    "homepage": "https://github.com/Soflomo/Portfolio",
+    "authors": [
+        {
+            "name": "Jurian Sluiman",
+            "email": "jurian@soflomo.com",
+            "homepage": "http://soflomo.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3.",
+        "zendframework/zendframework": ">=2.1.0",
+        "doctrine/doctrine-orm-module": ">=0.7.0",
+        "zf-commons/zfc-admin": ">=0.1.1",
+        "soflomo/common": ">=0.4.0",
+        "soflomo/purifier": ">=0.1.0",
+        "bacon/bacon-string-utils": ">=1.0.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Soflomo\\Portfolio": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}
