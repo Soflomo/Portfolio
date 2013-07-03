@@ -210,13 +210,13 @@ class ItemController extends AbstractActionController
     public function deleteAction()
     {
         $portfolio    = $this->getPortfolio();
-        $article = $this->getArticle($blog);
+        $article = $this->getArticle($portfolio);
         $service = $this->getService();
 
         $service->delete($article);
 
-        return $this->redirect()->toRoute('zfcadmin/blog', array(
-            'blog' => $blog->getSlug(),
+        return $this->redirect()->toRoute('zfcadmin/portfolio', array(
+            'portfolio' => $portfolio->getSlug(),
         ));
     }
 
