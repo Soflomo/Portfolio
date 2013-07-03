@@ -210,7 +210,7 @@ class ItemController extends AbstractActionController
     public function deleteAction()
     {
         $portfolio    = $this->getPortfolio();
-        $article = $this->getArticle($portfolio);
+        $article = $this->getItem($portfolio);
         $service = $this->getService();
 
         $service->delete($article);
