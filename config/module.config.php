@@ -156,6 +156,23 @@ return array(
         ),
     ),
 
+    'ensemble_admin' => array(
+        'routes' => array(
+            'portfolio' => array(
+                'portfolio' => array(
+                    'type' => 'literal',
+                    'options' => array(
+                        'route' => '/',
+                        'defaults' => array(
+                            'controller' => 'Soflomo\PortfolioAdmin\Controller\IndexController',
+                            'action'     => 'index'
+                        ),
+                    )
+                ),
+            ),
+        ),
+    ),
+
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
@@ -180,8 +197,9 @@ return array(
 
     'controllers' => array(
         'factories' => array(
-            'Soflomo\Portfolio\Controller\ItemController'      => 'Soflomo\Portfolio\Factory\ItemControllerFactory',
-            'Soflomo\PortfolioAdmin\Controller\ItemController' => 'Soflomo\PortfolioAdmin\Factory\ItemControllerFactory',
+            'Soflomo\Portfolio\Controller\ItemController'       => 'Soflomo\Portfolio\Factory\ItemControllerFactory',
+            'Soflomo\PortfolioAdmin\Controller\ItemController'  => 'Soflomo\PortfolioAdmin\Factory\ItemControllerFactory',
+            'Soflomo\PortfolioAdmin\Controller\IndexController' => 'Soflomo\PortfolioAdmin\Factory\IndexControllerFactory',
         ),
     ),
 
@@ -194,6 +212,14 @@ return array(
             'orm_default' => array(
                 'drivers' => array(
                     'Soflomo\Portfolio\Entity' => 'soflomo_portfolio'
+                ),
+            ),
+        ),
+        'entity_resolver' => array(
+            'orm_default' => array(
+                'resolvers' => array(
+                    'Soflomo\Portfolio\Entity\PortfolioInterface' => 'Soflomo\Portfolio\Entity\Portfolio',
+                    'Soflomo\Portfolio\Entity\ItemInterface'      => 'Soflomo\Portfolio\Entity\Item',
                 ),
             ),
         ),

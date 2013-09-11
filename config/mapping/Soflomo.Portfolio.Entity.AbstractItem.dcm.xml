@@ -8,10 +8,6 @@
             <generator strategy="AUTO" />
         </id>
 
-        <field name="title" type="string" unique="false" nullable="false" />
-        <field name="lead"  type="text"   unique="false" nullable="true" />
-        <field name="body"  type="text"   unique="false" nullable="true" />
-
-        <many-to-one field="portfolio" target-entity="Soflomo\Portfolio\Entity\Portfolio" nullable="false" />
+        <many-to-one field="portfolio" target-entity="Soflomo\Portfolio\Entity\PortfolioInterface" inversed-by="items" nullable="false" />
     </mapped-superclass>
 </doctrine-mapping>

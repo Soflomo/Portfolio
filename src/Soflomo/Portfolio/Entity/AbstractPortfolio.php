@@ -44,6 +44,7 @@ abstract class AbstractPortfolio implements PortfolioInterface
 {
     protected $id;
     protected $slug;
+    protected $items;
 
     /**
      * Getter for id
@@ -74,6 +75,28 @@ abstract class AbstractPortfolio implements PortfolioInterface
     public function setSlug($slug)
     {
         $this->slug = (string) $slug;
+        return $this;
+    }
+
+    /**
+     * Getter for items
+     *
+     * @return mixed
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    /**
+     * Setter for items
+     *
+     * @param mixed $items Value to set
+     * @return self
+     */
+    public function setItems($items)
+    {
+        $this->items = $items;
         return $this;
     }
 }

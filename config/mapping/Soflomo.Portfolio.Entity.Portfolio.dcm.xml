@@ -4,6 +4,6 @@
                     http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="Soflomo\Portfolio\Entity\Portfolio" table="portfolio">
-
+        <one-to-many field="items" target-entity="Soflomo\Portfolio\Entity\ItemInterface" mapped-by="portfolio" />
     </entity>
 </doctrine-mapping>
