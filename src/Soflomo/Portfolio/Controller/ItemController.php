@@ -102,7 +102,8 @@ class ItemController extends AbstractActionController
         $items     = $this->getItemRepository()->findAllByPortfolio($portfolio);
 
         return array(
-            'items' => $items,
+            'portfolio' => $portfolio,
+            'items'     => $items,
         );
     }
 
@@ -128,7 +129,8 @@ class ItemController extends AbstractActionController
         }
 
         return array(
-            'item' => $item,
+            'portfolio' => $portfolio,
+            'item'      => $item,
         );
     }
 
