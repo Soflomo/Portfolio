@@ -144,6 +144,7 @@ class ItemController extends AbstractActionController
             if ($form->isValid()) {
                 $this->getService()->create($item);
 
+                $this->flashMessenger()->addMessage('Item created successfully.');
                 return $this->redirect()->toRoute('zfcadmin/portfolio/item/view', array(
                     'portfolio'    => $portfolio->getSlug(),
                     'item' => $item->getId(),
@@ -178,6 +179,7 @@ class ItemController extends AbstractActionController
             if ($form->isValid()) {
                 $this->getService()->update($item);
 
+                $this->flashMessenger()->addMessage('Item saved successfully.');
                 return $this->redirect()->toRoute('zfcadmin/portfolio/item/update', array(
                     'portfolio' => $portfolio->getSlug(),
                     'item'      => $item->getId(),
@@ -215,6 +217,7 @@ class ItemController extends AbstractActionController
 
         $service->delete($article);
 
+        $this->flashMessenger()->addMessage('Item deleted successfully.');
         return $this->redirect()->toRoute('zfcadmin/portfolio', array(
             'portfolio' => $portfolio->getSlug(),
         ));
