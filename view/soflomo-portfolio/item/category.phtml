@@ -1,0 +1,24 @@
+<?php
+/**
+ * Listing of all items
+ *
+ * @var $paginator Zend\Paginator\Paginator
+ */
+
+$items = $this->paginator;
+
+?>
+
+<h1>Portfolio category</h1>
+
+<?php foreach ($items as $item):?>
+    <article>
+        <h2><a href="<?php echo $this->url('/view', array(
+            'item' => $item->getId(),
+            'slug' => $this->slug($item->getTitle()),
+        ))?>">
+            <?php echo $this->escapeHtml($item->getTitle())?>
+        </a></h2>
+        <p><?php echo $item->getLead()?></p>
+    </article>
+<?php endforeach ?>
