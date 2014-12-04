@@ -32,34 +32,18 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
+ * @package     Soflomo\Portfolio
+ * @subpackage  Entity
  * @author      Jurian Sluiman <jurian@soflomo.com>
  * @copyright   2013 Jurian Sluiman.
  * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link        http://soflomo.com
+ * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Soflomo\PortfolioAdmin\Factory;
+namespace Soflomo\Portfolio\Entity;
 
-use Soflomo\PortfolioAdmin\Form\Item  as ItemForm;
-use Soflomo\Common\Form\FormUtils;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
-
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-
-class ItemFormFactory implements FactoryInterface
+interface CategoryInterface
 {
-    public function createService(ServiceLocatorInterface $sl)
-    {
-        $repository = $sl->get('Soflomo\Portfolio\Repository\Category');
-        $form = new ItemForm(null, $repository);
-
-        $hydrator = new ClassMethodsHydrator;
-        $hydrator->addStrategy('category', $sl->get('Soflomo\Portfolio\Hydrator\Strategy\CategoryStrategy'));
-        $form->setHydrator($hydrator);
-
-        FormUtils::injectFilterPluginManager($form, $sl);
-
-        return $form;
-    }
+    public function getId();
 }

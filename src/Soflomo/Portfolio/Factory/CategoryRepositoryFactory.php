@@ -38,28 +38,20 @@
  * @link        http://soflomo.com
  */
 
-namespace Soflomo\PortfolioAdmin\Factory;
-
-use Soflomo\PortfolioAdmin\Form\Item  as ItemForm;
-use Soflomo\Common\Form\FormUtils;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+namespace Soflomo\Portfolio\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ItemFormFactory implements FactoryInterface
+class CategoryRepositoryFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $sl)
     {
-        $repository = $sl->get('Soflomo\Portfolio\Repository\Category');
-        $form = new ItemForm(null, $repository);
+        $options       = $sl->get('Soflomo\Portfolio\Options\ModuleOptions');
+        $class         = $options->getCategoryEntityClass();
+        $entityManager = $sl->get('Doctrine\ORM\EntityManager');
+        $repository    = $entityManager->getRepository($class);
 
-        $hydrator = new ClassMethodsHydrator;
-        $hydrator->addStrategy('category', $sl->get('Soflomo\Portfolio\Hydrator\Strategy\CategoryStrategy'));
-        $form->setHydrator($hydrator);
-
-        FormUtils::injectFilterPluginManager($form, $sl);
-
-        return $form;
+        return $repository;
     }
 }

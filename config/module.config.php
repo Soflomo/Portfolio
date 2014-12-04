@@ -41,9 +41,11 @@
 return array(
     'soflomo_portfolio' => array(
         'portfolio_entity_class' => 'Soflomo\Portfolio\Entity\Portfolio',
+        'category_entity_class'  => 'Soflomo\Portfolio\Entity\Category',
         'item_entity_class'      => 'Soflomo\Portfolio\Entity\Item',
 
         'admin_listing_limit'   => 10,
+        'category_listing_limit' => 10,
     ),
 
     'ensemble_kernel' => array(
@@ -67,6 +69,20 @@ return array(
                             'constraints' => array(
                                 'article' => '[0-9]+',
                                 'slug'    => '[a-zA-Z0-9-_]+',
+                            ),
+                        ),
+                    ),
+                    'category' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/category/:category[/:page]',
+                            'defaults' => array(
+                                'action' => 'category',
+                                'page'   => '1',
+                            ),
+                            'constraints' => array(
+                                'category' => '[a-zA-Z0-9-_.]+',
+                                'page'     => '[0-9]+',
                             ),
                         ),
                     ),
@@ -148,6 +164,64 @@ return array(
                                         ),
                                     ),
                                 ),
+                                'category' => array(
+                                    'type'    => 'literal',
+                                    'options' => array(
+                                        'route' => '/category',
+                                        'defaults' => array(
+                                            'controller' => 'Soflomo\PortfolioAdmin\Controller\CategoryController',
+                                            'action'     => 'index',
+                                        ),
+                                    ),
+                                    'may_terminate' => true,
+                                    'child_routes'  => array(
+                                        'view' => array(
+                                            'type'    => 'segment',
+                                            'options' => array(
+                                                'route' => '/:category',
+                                                'defaults' => array(
+                                                    'action' => 'view',
+                                                ),
+                                                'constraints' => array(
+                                                    'category' => '[0-9]+'
+                                                ),
+                                            ),
+                                        ),
+                                        'create' => array(
+                                            'type'    => 'literal',
+                                            'options' => array(
+                                                'route' => '/new',
+                                                'defaults' => array(
+                                                    'action' => 'create',
+                                                ),
+                                            ),
+                                        ),
+                                        'update' => array(
+                                            'type'    => 'segment',
+                                            'options' => array(
+                                                'route' => '/:category/edit',
+                                                'defaults' => array(
+                                                    'action' => 'update',
+                                                ),
+                                                'constraints' => array(
+                                                    'category' => '[0-9]+'
+                                                ),
+                                            ),
+                                        ),
+                                        'delete' => array(
+                                            'type'    => 'segment',
+                                            'options' => array(
+                                                'route' => '/:category/delete',
+                                                'defaults' => array(
+                                                    'action' => 'delete',
+                                                ),
+                                                'constraints' => array(
+                                                    'category' => '[0-9]+'
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
                             ),
                         ),
                     ),
@@ -188,10 +262,17 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'Soflomo\Portfolio\Repository\Item'      => 'Soflomo\Portfolio\Factory\ItemRepositoryFactory',
+            'Soflomo\Portfolio\Repository\Category'   => 'Soflomo\Portfolio\Factory\CategoryRepositoryFactory',
             'Soflomo\Portfolio\Repository\Portfolio' => 'Soflomo\Portfolio\Factory\PortfolioRepositoryFactory',
 
+            'Soflomo\Portfolio\Hydrator\Strategy\CategoryStrategy' => 'Soflomo\Portfolio\Factory\CategoryHydratorStrategyFactory',
+
             'Soflomo\PortfolioAdmin\Form\Item'       => 'Soflomo\PortfolioAdmin\Factory\ItemFormFactory',
+            'Soflomo\PortfolioAdmin\Form\Category'    => 'Soflomo\PortfolioAdmin\Factory\CategoryFormFactory',
+
             'Soflomo\PortfolioAdmin\Service\Item'    => 'Soflomo\PortfolioAdmin\Factory\ItemServiceFactory',
+            'Soflomo\PortfolioAdmin\Service\Category' => 'Soflomo\PortfolioAdmin\Factory\CategoryServiceFactory',
+
         ),
     ),
 
@@ -199,6 +280,8 @@ return array(
         'factories' => array(
             'Soflomo\Portfolio\Controller\ItemController'       => 'Soflomo\Portfolio\Factory\ItemControllerFactory',
             'Soflomo\PortfolioAdmin\Controller\ItemController'  => 'Soflomo\PortfolioAdmin\Factory\ItemControllerFactory',
+            'Soflomo\PortfolioAdmin\Controller\CategoryController' => 'Soflomo\PortfolioAdmin\Factory\CategoryControllerFactory',
+
             'Soflomo\PortfolioAdmin\Controller\IndexController' => 'Soflomo\PortfolioAdmin\Factory\IndexControllerFactory',
         ),
     ),
@@ -219,6 +302,7 @@ return array(
             'orm_default' => array(
                 'resolvers' => array(
                     'Soflomo\Portfolio\Entity\PortfolioInterface' => 'Soflomo\Portfolio\Entity\Portfolio',
+                    'Soflomo\Portfolio\Entity\CategoryInterface' => 'Soflomo\Portfolio\Entity\Category',
                     'Soflomo\Portfolio\Entity\ItemInterface'      => 'Soflomo\Portfolio\Entity\Item',
                 ),
             ),

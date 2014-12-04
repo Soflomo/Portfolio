@@ -32,121 +32,59 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
+ * @package     Soflomo\PortfolioAdmin
+ * @subpackage  Form
  * @author      Jurian Sluiman <jurian@soflomo.com>
  * @copyright   2013 Jurian Sluiman.
  * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link        http://soflomo.com
+ * @version     @@PACKAGE_VERSION@@
  */
 
 namespace Soflomo\PortfolioAdmin\Form;
 
-use Doctrine\Common\Persistence\ObjectRepository as CategoryRepository;
+use BaconStringUtils\Filter\Slugify;
 
-use Zend\InputFilter;
+use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Form\Form;
 
-class Item extends Form implements
-    InputFilter\InputFilterProviderInterface
+class Category extends Form implements InputFilterProviderInterface
 {
-    protected $repository;
-
-    protected $categories;
-
-    public function __construct($name = null, CategoryRepository $repository)
+    public function __construct($name = null)
     {
         parent::__construct($name);
-        $this->repository = $repository;
 
         $this->add(array(
-            'name'    => 'title',
+            'name'    => 'slug',
             'options' => array(
-                'label' => 'Title'
+                'label' => 'Slug'
             ),
         ));
 
         $this->add(array(
-            'name'    => 'lead',
+            'name'    => 'name',
             'options' => array(
-                'label' => 'Lead'
-            ),
-            'attributes' => array(
-                'type'  => 'textarea',
-            ),
-        ));
-
-        $this->add(array(
-            'name'    => 'body',
-            'options' => array(
-                'label' => 'Body'
-            ),
-            'attributes' => array(
-                'type'  => 'textarea',
-            ),
-        ));
-
-        $categories = $this->getCategories();
-        $list       = array(0 => '');
-        foreach ($categories as $category) {
-            $list[$category->getId()] = $category->getName();
-        }
-
-        $this->add(array(
-            'name'    => 'category',
-            'type'    => 'select',
-            'options' => array(
-                'label' => 'Category',
-            ),
-            'attributes' => array(
-                'options' => $list,
+                'label' => 'Name'
             ),
         ));
     }
 
     public function getInputFilterSpecification()
     {
-        $categories = $this->getCategories();
-        $list       = array();
-        foreach ($categories as $category) {
-            $list[] = $category->getId();
-        }
-
         return array(
-            'title' => array(
+            'slug' => array(
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'stringtrim'),
+                    new Slugify,
+                ),
+            ),
+            'name' => array(
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'stringtrim'),
                 ),
             ),
-            'lead'  => array(
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'stringtrim'),
-                    array('name' => 'htmlpurifier'),
-                ),
-            ),
-            'body'  => array(
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'stringtrim'),
-                    array('name' => 'htmlpurifier'),
-                ),
-            ),
-            'categories' => array(
-                'required'  => false,
-                'validator' => array(
-                    array('name' => 'in_array', 'options' => array('hay_stack' => $list)),
-                )
-            ),
         );
-    }
-
-    protected function getCategories()
-    {
-        if (null !== $this->categories) {
-            return $this->categories;
-        }
-
-        $this->categories = $this->repository->findAll();
-        return $this->categories;
     }
 }

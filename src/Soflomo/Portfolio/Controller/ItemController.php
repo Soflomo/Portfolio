@@ -134,6 +134,18 @@ class ItemController extends AbstractActionController
         );
     }
 
+    public function categoryAction()
+    {
+        $portfolio = $this->getPortfolio();
+        $category  = $this->params('category');
+        $items = $this->getItemRepository()->findCategoryListing($portfolio, $category);
+
+        return array(
+            'portfolio' => $portfolio,
+            'items'     => $items,
+        );
+    }
+
     protected function getPortfolio()
     {
         $page      = $this->getPage();

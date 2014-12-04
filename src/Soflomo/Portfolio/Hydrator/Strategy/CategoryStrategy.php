@@ -38,28 +38,48 @@
  * @link        http://soflomo.com
  */
 
-namespace Soflomo\PortfolioAdmin\Factory;
+namespace Soflomo\Portfolio\Hydrator\Strategy;
 
-use Soflomo\PortfolioAdmin\Form\Item  as ItemForm;
-use Soflomo\Common\Form\FormUtils;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Soflomo\Portfolio\Entity\CategoryInterface;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Zend\Stdlib\Hydrator\Strategy\DefaultStrategy;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-
-class ItemFormFactory implements FactoryInterface
+class CategoryStrategy extends DefaultStrategy
 {
-    public function createService(ServiceLocatorInterface $sl)
+    protected $repository;
+
+    public function __construct(ObjectRepository $repository)
     {
-        $repository = $sl->get('Soflomo\Portfolio\Repository\Category');
-        $form = new ItemForm(null, $repository);
+        $this->repository = $repository;
+    }
 
-        $hydrator = new ClassMethodsHydrator;
-        $hydrator->addStrategy('category', $sl->get('Soflomo\Portfolio\Hydrator\Strategy\CategoryStrategy'));
-        $form->setHydrator($hydrator);
+    /**
+     * {@inheritDoc}
+     *
+     * Return category id
+     */
+    public function extract($value)
+    {
+        if ($value instanceof CategoryInterface) {
+            $value = $value->getId();
+        }
 
-        FormUtils::injectFilterPluginManager($form, $sl);
+        return $value;
+    }
 
-        return $form;
+    /**
+     * {@inheritDoc}
+     *
+     * Convert a string value into a Category object
+     */
+    public function hydrate($value)
+    {
+        if (empty($value)) {
+            $value = null;
+        } elseif (is_string($value) && is_numeric($value)) {
+            $value = $this->repository->find($value);
+        }
+
+        return $value;
     }
 }
