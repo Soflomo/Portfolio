@@ -164,60 +164,60 @@ return array(
                                         ),
                                     ),
                                 ),
-                                'category' => array(
-                                    'type'    => 'literal',
-                                    'options' => array(
-                                        'route' => '/category',
-                                        'defaults' => array(
-                                            'controller' => 'Soflomo\PortfolioAdmin\Controller\CategoryController',
-                                            'action'     => 'index',
+                            ),
+                            'category' => array(
+                                'type'    => 'literal',
+                                'options' => array(
+                                    'route' => '/category',
+                                    'defaults' => array(
+                                        'controller' => 'Soflomo\PortfolioAdmin\Controller\CategoryController',
+                                        'action'     => 'index',
+                                    ),
+                                ),
+                                'may_terminate' => true,
+                                'child_routes'  => array(
+                                    'view' => array(
+                                        'type'    => 'segment',
+                                        'options' => array(
+                                            'route' => '/:category',
+                                            'defaults' => array(
+                                                'action' => 'view',
+                                            ),
+                                            'constraints' => array(
+                                                'category' => '[0-9]+'
+                                            ),
                                         ),
                                     ),
-                                    'may_terminate' => true,
-                                    'child_routes'  => array(
-                                        'view' => array(
-                                            'type'    => 'segment',
-                                            'options' => array(
-                                                'route' => '/:category',
-                                                'defaults' => array(
-                                                    'action' => 'view',
-                                                ),
-                                                'constraints' => array(
-                                                    'category' => '[0-9]+'
-                                                ),
+                                    'create' => array(
+                                        'type'    => 'literal',
+                                        'options' => array(
+                                            'route' => '/new',
+                                            'defaults' => array(
+                                                'action' => 'create',
                                             ),
                                         ),
-                                        'create' => array(
-                                            'type'    => 'literal',
-                                            'options' => array(
-                                                'route' => '/new',
-                                                'defaults' => array(
-                                                    'action' => 'create',
-                                                ),
+                                    ),
+                                    'update' => array(
+                                        'type'    => 'segment',
+                                        'options' => array(
+                                            'route' => '/:category/edit',
+                                            'defaults' => array(
+                                                'action' => 'update',
+                                            ),
+                                            'constraints' => array(
+                                                'category' => '[0-9]+'
                                             ),
                                         ),
-                                        'update' => array(
-                                            'type'    => 'segment',
-                                            'options' => array(
-                                                'route' => '/:category/edit',
-                                                'defaults' => array(
-                                                    'action' => 'update',
-                                                ),
-                                                'constraints' => array(
-                                                    'category' => '[0-9]+'
-                                                ),
+                                    ),
+                                    'delete' => array(
+                                        'type'    => 'segment',
+                                        'options' => array(
+                                            'route' => '/:category/delete',
+                                            'defaults' => array(
+                                                'action' => 'delete',
                                             ),
-                                        ),
-                                        'delete' => array(
-                                            'type'    => 'segment',
-                                            'options' => array(
-                                                'route' => '/:category/delete',
-                                                'defaults' => array(
-                                                    'action' => 'delete',
-                                                ),
-                                                'constraints' => array(
-                                                    'category' => '[0-9]+'
-                                                ),
+                                            'constraints' => array(
+                                                'category' => '[0-9]+'
                                             ),
                                         ),
                                     ),
