@@ -32,34 +32,97 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
+ * @package     Soflomo\Portfolio
+ * @subpackage  Entity
  * @author      Jurian Sluiman <jurian@soflomo.com>
  * @copyright   2013 Jurian Sluiman.
  * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link        http://soflomo.com
+ * @version     @@PACKAGE_VERSION@@
  */
 
-namespace Soflomo\PortfolioAdmin\Factory;
+namespace Soflomo\Portfolio\Entity;
 
-use Soflomo\PortfolioAdmin\Form\Item  as ItemForm;
-use Soflomo\Common\Form\FormUtils;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
-
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-
-class ItemFormFactory implements FactoryInterface
+abstract class AbstractCategory implements CategoryInterface
 {
-    public function createService(ServiceLocatorInterface $sl)
+    protected $id;
+    protected $slug;
+    protected $name;
+    protected $items;
+
+    /**
+     * Getter for id
+     *
+     * @return int
+     */
+    public function getId()
     {
-        $repository = $sl->get('Soflomo\Portfolio\Repository\Category');
-        $form = new ItemForm(null, $repository);
+        return $this->id;
+    }
 
-        $hydrator = new ClassMethodsHydrator;
-        $hydrator->addStrategy('category', $sl->get('Soflomo\Portfolio\Hydrator\Strategy\CategoryStrategy'));
-        $form->setHydrator($hydrator);
+    /**
+     * Getter for slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 
-        FormUtils::injectFilterPluginManager($form, $sl);
+    /**
+     * Setter for slug
+     *
+     * @param string $slug Value to set
+     * @return self
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
+    }
 
-        return $form;
+    /**
+     * Getter for name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Setter for name
+     *
+     * @param string $name Value to set
+     * @return self
+     */
+    public function setName($name)
+    {
+        $this->name = (string) $name;
+        return $this;
+    }
+
+    /**
+     * Getter for items
+     *
+     * @return null|array
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    /**
+     * Setter for items
+     *
+     * @param null|array $items Value to set
+     * @return self
+     */
+    public function setItems($items)
+    {
+        $this->items = $items;
+        return $this;
     }
 }

@@ -55,14 +55,24 @@ class ModuleOptions extends AbstractOptions
     protected $adminListingLimit = 10;
 
     /**
-     * @var string
+     * @var int
      */
-    protected $blogEntityClass;
+    protected $categoryListingLimit = 10;
 
     /**
      * @var string
      */
-    protected $articleEntityClass;
+    protected $portfolioEntityClass;
+
+     /**
+     * @var string
+     */
+    protected $categoryEntityClass;
+
+    /**
+     * @var string
+     */
+    protected $itemEntityClass;
 
     /**
      * Getter for adminListingLimit
@@ -87,6 +97,28 @@ class ModuleOptions extends AbstractOptions
     }
 
     /**
+     * Getter for categoryListingLimit
+     *
+     * @return mixed
+     */
+    public function getCategoryListingLimit()
+    {
+        return $this->categoryListingLimit;
+    }
+
+    /**
+     * Setter for categoryListingLimit
+     *
+     * @param mixed $categoryListingLimit Value to set
+     * @return self
+     */
+    public function setCategoryListingLimit($categoryListingLimit)
+    {
+        $this->categoryListingLimit = $categoryListingLimit;
+        return $this;
+    }
+
+    /**
      * Getter for portfolioEntityClass
      *
      * @return mixed
@@ -106,6 +138,38 @@ class ModuleOptions extends AbstractOptions
     {
         $this->portfolioEntityClass = $portfolioEntityClass;
         return $this;
+    }
+
+    /**
+     * Getter for categoryEntityClass
+     *
+     * @return mixed
+     */
+    public function getCategoryEntityClass()
+    {
+        return $this->categoryEntityClass;
+    }
+
+    /**
+     * Setter for categoryEntityClass
+     *
+     * @param mixed $categoryEntityClass Value to set
+     * @return self
+     */
+    public function setCategoryEntityClass($categoryEntityClass)
+    {
+        $this->categoryEntityClass = $categoryEntityClass;
+        return $this;
+    }
+
+    /**
+     * Getter for articleEntityClass
+     *
+     * @return mixed
+     */
+    public function getArticleEntityClass()
+    {
+        return $this->articleEntityClass;
     }
 
     /**

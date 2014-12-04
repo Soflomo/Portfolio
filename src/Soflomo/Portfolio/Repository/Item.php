@@ -61,6 +61,16 @@ class Item extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findByPortfolio(PortfolioEntity $portfolio, $limit)
+    {
+        $qb = $this->createQueryBuilder('i');
+        $qb->andWhere('i.portfolio = :portfolio')
+           ->setParameter('portfolio', $portfolio)
+           ->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findItem(PortfolioEntity $portfolio, $id)
     {
         $qb = $this->createQueryBuilder('i');
@@ -77,6 +87,22 @@ class Item extends EntityRepository
         $qb = $this->createQueryBuilder('i');
         $qb->andWhere('i.portfolio = :portfolio')
            ->setParameter('portfolio', $portfolio);
+
+        $paginator = $this->getPaginator($qb->getQuery());
+        $paginator->setCurrentPageNumber($page)
+                  ->setItemCountPerPage($limit);
+
+        return $paginator;
+    }
+
+    public function findCategoryListing(PortfolioEntity $portfolio, $category, $page, $limit)
+    {
+        $qb = $this->createQueryBuilder('i');
+        $qb->andWhere('i.portfolio = :portfolio')
+           ->setParameter('portfolio', $portfolio)
+           ->leftJoin('i.category', 'c')
+           ->andWhere('c.slug = :category')
+           ->setParameter('category', $category);
 
         $paginator = $this->getPaginator($qb->getQuery());
         $paginator->setCurrentPageNumber($page)

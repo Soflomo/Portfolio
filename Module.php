@@ -93,6 +93,7 @@ class Module implements
         $controllers = array(
             'Soflomo\Portfolio\Controller\ItemController',
             'Soflomo\PortfolioAdmin\Controller\ItemController',
+            'Soflomo\PortfolioAdmin\Controller\CategoryController',
         );
         $em->attach($controllers, MvcEvent::EVENT_DISPATCH, array($listener, 'injectTemplate'), -80);
     }
@@ -106,7 +107,7 @@ class Module implements
     {
         return array(
             'factories' => array(
-                'Soflomo\Portfolio\Options\ModuleOptions' => function($sm) {
+                'Soflomo\Portfolio\Options\ModuleOptions' => function ($sm) {
                     $config  = $sm->get('config');
                     $options = new Options\ModuleOptions($config['soflomo_portfolio']);
 

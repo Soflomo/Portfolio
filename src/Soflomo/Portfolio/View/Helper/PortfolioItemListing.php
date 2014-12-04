@@ -38,28 +38,57 @@
  * @link        http://soflomo.com
  */
 
-namespace Soflomo\PortfolioAdmin\Factory;
+namespace Soflomo\Portfolio\View\Helper;
 
-use Soflomo\PortfolioAdmin\Form\Item  as ItemForm;
-use Soflomo\Common\Form\FormUtils;
-use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
+use Zend\View\Helper\AbstractHelper;
+use Doctrine\ORM\EntityRepository   as PortfolioRepository;
+use Soflomo\Portfolio\Repository\Item as ItemRepository;
+use Soflomo\Portfolio\Exception;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-
-class ItemFormFactory implements FactoryInterface
+class PortfolioItemListing extends AbstractHelper
 {
-    public function createService(ServiceLocatorInterface $sl)
+    const DEFAULT_ITEM_LIMIT = 10;
+
+    protected $repository;
+
+    public function __construct(PortfolioRepository $portfolioRepository, ItemRepository $articleRepository)
     {
-        $repository = $sl->get('Soflomo\Portfolio\Repository\Category');
-        $form = new ItemForm(null, $repository);
+        $this->portfolioRepository    = $portfolioRepository;
+        $this->articleRepository = $articleRepository;
+    }
 
-        $hydrator = new ClassMethodsHydrator;
-        $hydrator->addStrategy('category', $sl->get('Soflomo\Portfolio\Hydrator\Strategy\CategoryStrategy'));
-        $form->setHydrator($hydrator);
+    public function __invoke($portfolio, $limit = null)
+    {
+        $portfolio  = $this->getPortfolio($portfolio);
+        $limit = $limit ?: self::DEFAULT_ITEM_LIMIT;
 
-        FormUtils::injectFilterPluginManager($form, $sl);
+        return $this->getItemRepository()->findByPortfolio($portfolio, $limit);
+    }
 
-        return $form;
+    protected function getPortfolio($idOrSlug)
+    {
+        if (is_int($idOrSlug)) {
+            $portfolio = $this->getPortfolioRepository()->find($idOrSlug);
+        } else {
+            $portfolio = $this->getPortfolioRepository()->findOneBySlug($idOrSlug);
+        }
+
+        if (null === $portfolio) {
+            throw new Exception\PortfolioNotFoundException(sprintf(
+                'Portfolio with slug "%s" not found', $slug
+            ));
+        }
+
+        return $portfolio;
+    }
+
+    protected function getPortfolioRepository()
+    {
+        return $this->portfolioRepository;
+    }
+
+    protected function getItemRepository()
+    {
+        return $this->articleRepository;
     }
 }

@@ -9,5 +9,9 @@
         </id>
 
         <many-to-one field="portfolio" target-entity="Soflomo\Portfolio\Entity\PortfolioInterface" inversed-by="items" nullable="false" />
+
+        <many-to-one field="category" target-entity="Soflomo\Portfolio\Entity\CategoryInterface" inversed-by="items" nullable="true">
+            <join-column on-delete="set null"/>
+        </many-to-one>
     </mapped-superclass>
 </doctrine-mapping>

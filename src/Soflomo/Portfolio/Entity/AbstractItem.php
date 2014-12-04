@@ -55,6 +55,7 @@ abstract class AbstractItem implements ItemInterface
     protected $body;
 
     protected $portfolio;
+    protected $category;
 
     /**
      * Getter for id
@@ -151,6 +152,28 @@ abstract class AbstractItem implements ItemInterface
     public function setPortfolio(PortfolioInterface $portfolio)
     {
         $this->portfolio = $portfolio;
+        return $this;
+    }
+
+    /**
+     * Getter for category
+     *
+     * @return CategoryInterface
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Setter for category
+     *
+     * @param CategoryInterface $category Value to set
+     * @return self
+     */
+    public function setCategory(CategoryInterface $category = null)
+    {
+        $this->category = $category;
         return $this;
     }
 }
