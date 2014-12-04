@@ -138,11 +138,12 @@ class ItemController extends AbstractActionController
     {
         $portfolio = $this->getPortfolio();
         $category  = $this->params('category');
-        $items = $this->getItemRepository()->findCategoryListing($portfolio, $category);
+        $page      = $this->params('page');
+        $limit     = $this->getOptions()->getCategoryListingLimit();
+        $paginator = $this->getItemRepository()->findCategoryListing($portfolio, $category, $page, $limit);
 
         return array(
-            'portfolio' => $portfolio,
-            'items'     => $items,
+            'paginator' => $paginator
         );
     }
 
