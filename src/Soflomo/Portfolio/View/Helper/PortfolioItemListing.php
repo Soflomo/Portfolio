@@ -41,7 +41,7 @@
 namespace Soflomo\Portfolio\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use Doctrine\ORM\EntityRepository   as PortfolioRepository;
+use Doctrine\ORM\EntityRepository     as PortfolioRepository;
 use Soflomo\Portfolio\Repository\Item as ItemRepository;
 use Soflomo\Portfolio\Exception;
 
@@ -59,8 +59,8 @@ class PortfolioItemListing extends AbstractHelper
 
     public function __invoke($portfolio, $limit = null)
     {
-        $portfolio  = $this->getPortfolio($portfolio);
-        $limit = $limit ?: self::DEFAULT_ITEM_LIMIT;
+        $portfolio = $this->getPortfolio($portfolio);
+        $limit     = $limit ?: self::DEFAULT_ITEM_LIMIT;
 
         return $this->getItemRepository()->findByPortfolio($portfolio, $limit);
     }
@@ -89,6 +89,6 @@ class PortfolioItemListing extends AbstractHelper
 
     protected function getItemRepository()
     {
-        return $this->articleRepository;
+        return $this->itemRepository;
     }
 }
