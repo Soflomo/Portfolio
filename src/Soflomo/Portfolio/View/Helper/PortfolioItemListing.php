@@ -51,10 +51,10 @@ class PortfolioItemListing extends AbstractHelper
 
     protected $repository;
 
-    public function __construct(PortfolioRepository $portfolioRepository, ItemRepository $articleRepository)
+    public function __construct(PortfolioRepository $portfolioRepository, ItemRepository $itemRepository)
     {
-        $this->portfolioRepository    = $portfolioRepository;
-        $this->articleRepository = $articleRepository;
+        $this->portfolioRepository = $portfolioRepository;
+        $this->itemRepository      = $itemRepository;
     }
 
     public function __invoke($portfolio, $limit = null)
