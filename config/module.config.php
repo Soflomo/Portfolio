@@ -254,6 +254,9 @@ return array(
     ),
 
     'view_helpers' => array(
+        'factories' => array(
+            'portfolioItems' => 'EllaPortfolio\Factory\PortfolioItemListingFactory',
+        ),
         'invokables' => array(
             'slug' => 'Soflomo\Portfolio\View\Helper\Slug'
         ),
