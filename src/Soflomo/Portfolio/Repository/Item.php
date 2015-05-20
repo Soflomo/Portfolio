@@ -82,6 +82,15 @@ class Item extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    public function findAllByCategory($category)
+    {
+        $qb = $this->createQueryBuilder('i');
+        $qb->andWhere('i.category = :category')
+           ->setParameter('category', $category);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findListing(PortfolioEntity $portfolio, $page, $limit)
     {
         $qb = $this->createQueryBuilder('i');

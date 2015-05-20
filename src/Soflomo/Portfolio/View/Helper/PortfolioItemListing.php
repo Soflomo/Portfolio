@@ -57,12 +57,35 @@ class PortfolioItemListing extends AbstractHelper
         $this->itemRepository      = $itemRepository;
     }
 
-    public function __invoke($portfolio, $limit = null)
+    public function __invoke($portfolio, $limit = null,  $category = null)
     {
-        $portfolio = $this->getPortfolio($portfolio);
-        $limit     = $limit ?: self::DEFAULT_ITEM_LIMIT;
+        $limit  = $limit ?: self::DEFAULT_ITEM_LIMIT;
 
-        return $this->getItemRepository()->findByPortfolio($portfolio, $limit);
+        if (null === $category) {
+            return $this->getListing($portfolio, $limit);
+        }
+
+        return $this->getCategoryListing($portfolio, $category, $limit);
+    }
+
+    protected function getCategoryListing($portfolio, $category, $limit)
+    {
+        $portfolio  = $this->getPortfolio($portfolio);
+        $limit = $limit ?: self::DEFAULT_ITEM_LIMIT;
+        $page  = 1;
+
+        $paginator = $this->getItemRepository()->findCategoryListing($portfolio, $category, $page, $limit);
+        return $paginator->getCurrentItems();
+    }
+
+    protected function getListing($portfolio, $limit)
+    {
+        $portfolio  = $this->getPortfolio($portfolio);
+        $limit = $limit ?: self::DEFAULT_ITEM_LIMIT;
+        $page  = 1;
+
+        $paginator = $this->getItemRepository()->findListing($portfolio, $page, $limit);
+        return $paginator->getCurrentItems();
     }
 
     protected function getPortfolio($idOrSlug)
